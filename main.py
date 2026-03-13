@@ -2,9 +2,11 @@ import streamlit as st
 
 import joblib 
 import pandas as pd
+@st.cache_resource
+def load_model():
+    return joblib.load("Mobile_price.joblib")
 try:
- 
-   model = joblib.load("Mobile_price.joblib")
+   model = load_model()
 except:
     st.error("Model file not found! ")
 df = pd.read_csv("Flipkart_Mobiles.csv")
@@ -56,4 +58,5 @@ if st.button("Predict Price "):
     prediction = model.predict(input_df)
     st.success(f"Prediction Price : ₹ {prediction[0]:,.0f} " )
 st.markdown("---")
+
 st.markdown("Developed by **Arun Kumar** | Data Analyst Project") 
